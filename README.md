@@ -1,24 +1,27 @@
-# iris-flower-species-classification-project
-Our mission is to build a machine learning model that acts like a botanist's assistant.  The Goal: To train a model that can automatically identify the correct species of an Iris flower (setosa, versicolor, or virginica) just by being given the measurements of its petals and sepals.  
-Imagine a scientist finds a new Iris flower in the wild. Instead of identifying it manually, they could measure it, feed the measurements to our model, and the model would tell them the species.
+# Iris Flower Species Classification
 
-The Data We Are Using
-To achieve this goal, we are using a famous, real-world dataset collected by botanist Edgar Anderson in the 1930s. It's the record of his measurements for 150 Iris flowers.
+**Project Status:** Completed
 
-For each of the 150 flowers, he recorded four things (these are our features or inputs):
+## Objective
+The goal of this project was to build a machine learning model capable of accurately classifying the species of an Iris flower (setosa, versicolor, or virginica) based on four physical measurements: sepal length, sepal width, petal length, and petal width.
 
-The length of its sepal (the green leaf-like part that encloses the bud).
+## Dataset
+This project uses the classic Iris dataset, a real-world dataset collected by botanist Edgar Anderson. It contains 150 samples from the three different species of Iris flowers.
 
-The width of its sepal.
+## Process
+1.  **Data Loading & Exploration:** Loaded the dataset using scikit-learn and used Pandas to inspect its structure and statistics.
+2.  **Data Visualization:** Created scatter plots using Matplotlib and Seaborn to visualize the relationships between features and identify patterns among the different species.
+3.  **Data Preparation:** Split the data into features (X) and a target (y), and then further divided it into an 80% training set and a 20% testing set.
+4.  **Model Training:** Trained a K-Nearest Neighbors (KNN) classification model on the training data.
+5.  **Model Evaluation:** Evaluated the trained model's performance on the unseen test set to measure its accuracy.
 
-The length of its petal (the colorful part).
+## Results
+The trained K-Nearest Neighbors model achieved an accuracy of **100%** on the test set, correctly identifying the species of all 30 flowers it had never seen before.
 
-The width of its petal.
+## What I Learned
+- The full end-to-end workflow of a machine learning project.
+- The importance of the train-test split to prevent "cheating" and get a true measure of performance.
+- How to use fundamental Python libraries like Pandas (for data manipulation), Matplotlib/Seaborn (for visualization), and Scikit-learn (for modeling).
 
-He also recorded the correct species for each flower (this is our target or the "right answer" we want the model to learn to predict):
-
-Iris setosa
-
-Iris versicolor
-
-Iris virginica
+## How to Run
+To run this project, you can open the `iris_classification.ipynb` notebook in Google Colab or another Jupyter environment.
