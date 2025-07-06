@@ -1,27 +1,95 @@
-# Iris Flower Species Classification
+# Import our main tools
+import pandas as pd
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 
-**Project Status:** Completed
+# Load the iris dataset
+iris = load_iris()
 
-## Objective
-The goal of this project was to build a machine learning model capable of accurately classifying the species of an Iris flower (setosa, versicolor, or virginica) based on four physical measurements: sepal length, sepal width, petal length, and petal width.
+# Create a Pandas DataFrame from the data
+# The features (measurements) are in iris.data
+# The target (species) is in iris.target
+df = pd.DataFrame(data=iris.data, columns=iris.feature_names)
+df['species'] = iris.target
 
-## Dataset
-This project uses the classic Iris dataset, a real-world dataset collected by botanist Edgar Anderson. It contains 150 samples from the three different species of Iris flowers.
+# Let's see the first 5 rows of our data
+print("Here is a preview of the data:")
+print(df.head())
 
-## Process
-1.  **Data Loading & Exploration:** Loaded the dataset using scikit-learn and used Pandas to inspect its structure and statistics.
-2.  **Data Visualization:** Created scatter plots using Matplotlib and Seaborn to visualize the relationships between features and identify patterns among the different species.
-3.  **Data Preparation:** Split the data into features (X) and a target (y), and then further divided it into an 80% training set and a 20% testing set.
-4.  **Model Training:** Trained a K-Nearest Neighbors (KNN) classification model on the training data.
-5.  **Model Evaluation:** Evaluated the trained model's performance on the unseen test set to measure its accuracy.
+# Let's see what the species numbers mean
+print("\nSpecies Key:")
+print({i: name for i, name in enumerate(iris.target_names)})
 
-## Results
-The trained K-Nearest Neighbors model achieved an accuracy of **100%** on the test set, correctly identifying the species of all 30 flowers it had never seen before.
+# Import the seaborn library for beautiful visualizations
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-## What I Learned
-- The full end-to-end workflow of a machine learning project.
-- The importance of the train-test split to prevent "cheating" and get a true measure of performance.
-- How to use fundamental Python libraries like Pandas (for data manipulation), Matplotlib/Seaborn (for visualization), and Scikit-learn (for modeling).
+# Get a quick summary of the data
+print("Data Information:")
+df.info()
 
-## How to Run
-To run this project, you can open the `iris_classification.ipynb` notebook in Google Colab or another Jupyter environment.
+print("\nStatistical Summary:")
+print(df.describe())
+
+
+
+# --- Let's create our first visualization! ---
+# We will make a scatter plot of sepal length vs. sepal width
+# We'll color each dot based on its species to see if there are patterns.
+
+print("\nCreating a scatter plot...")
+sns.scatterplot(x='sepal length (cm)', y='sepal width (cm)', hue='species', data=df, palette='viridis')
+plt.title('Sepal Length vs. Sepal Width')
+plt.show() # This command displays the plot
+
+
+# Separate our data into features (X) and target (y)
+# X contains all columns EXCEPT the 'species' column
+X = df.drop('species', axis=1)
+
+# y contains ONLY the 'species' column
+y = df['species']
+
+
+# Split the data into training and testing sets
+# We'll use 80% for training and 20% for testing.
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+# Let's see how many samples are in each set
+print("Number of samples in our Training Set:", len(X_train))
+print("Number of samples in our Testing Set:", len(X_test))
+
+
+# Create our machine learning model
+# We'll choose the K-Nearest Neighbors classifier and set k=3
+model = KNeighborsClassifier(n_neighbors=3)
+
+# --- This is the most important step ---
+# Train the model using our training data (X_train and y_train)
+model.fit(X_train, y_train)
+
+print("Training complete!")
+print("The model has learned the patterns from the 120 training samples.")
+
+
+
+# Use our trained model to make predictions on the test data
+predictions = model.predict(X_test)
+
+# Let's see what the model predicted for the 30 test flowers
+print("Model Predictions:", predictions)
+
+# Let's see what the actual correct answers were
+print("Actual Answers:   ", y_test.to_numpy())
+
+
+# Now, let's compare the predictions to the actual answers to get our accuracy
+accuracy = accuracy_score(y_test, predictions)
+
+print("\nModel Accuracy on the Test Set:")
+print(f"{accuracy:.2%}") # This formats the number as a percentage
+
+
